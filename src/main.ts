@@ -178,7 +178,11 @@ export default class Obligator extends Plugin {
 				}
 				return notes;
 			}
-			const notes = find_all_notes(this.settings.note_path);
+			let notes = find_all_notes(this.settings.note_path);
+			if (this.settings.archive && this.settings.archive_path) {
+			    const archived_notes = find_all_notes(this.settings.archive_path);
+			    notes = notes.concat(archived_notes);
+			}
 			notes.sort((a, b) => {
 				const a_name = a.path.slice(this.settings.note_path.length + 1);
 				const b_name = b.path.slice(this.settings.note_path.length + 1);
